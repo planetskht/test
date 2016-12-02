@@ -1,0 +1,29 @@
+<%- model_class = HydralicParticular -%>
+<div class="page-header">
+  <h1><%=t '.title', :default => model_class.model_name.human.titleize %></h1>
+</div>
+
+<dl class="dl-horizontal">
+  <dt><strong><%= model_class.human_attribute_name(:from_km) %>:</strong></dt>
+  <dd><%= @hydralic_particular.from_km %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:to_km) %>:</strong></dt>
+  <dd><%= @hydralic_particular.to_km %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:title) %>:</strong></dt>
+  <dd><%= @hydralic_particular.title %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:description) %>:</strong></dt>
+  <dd><%= @hydralic_particular.description %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:project_id) %>:</strong></dt>
+  <dd><%= @hydralic_particular.project_id %></dd>
+  <dt><strong><%= model_class.human_attribute_name(:type) %>:</strong></dt>
+  <dd><%= @hydralic_particular.type %></dd>
+</dl>
+
+<%= link_to t('.back', :default => t("helpers.links.back")),
+              hydralic_particulars_path, :class => 'btn btn-default'  %>
+<%= link_to t('.edit', :default => t("helpers.links.edit")),
+              edit_hydralic_particular_path(@hydralic_particular), :class => 'btn btn-default' %>
+<%= link_to t('.destroy', :default => t("helpers.links.destroy")),
+              hydralic_particular_path(@hydralic_particular),
+              :method => 'delete',
+              :data => { :confirm => t('.confirm', :default => t("helpers.links.confirm", :default => 'Are you sure?')) },
+              :class => 'btn btn-danger' %>

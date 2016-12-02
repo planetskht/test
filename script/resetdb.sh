@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+echo "db:drop.."
+rake db:drop
+echo "db:create.."
+rake db:create
+echo "db:migrate..."
+rake db:migrate
+echo "db:seed..."
+rake db:seed

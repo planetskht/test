@@ -1,0 +1,50 @@
+<%= form_for ([@project, @sub_project, @bench_mark]), :html => { :class => "form-horizontal bench_mark" } do |f| %>
+
+  <% if @bench_mark.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@bench_mark.errors.count, "error") %> prohibited this bench_mark from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @bench_mark.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :title, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :title, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :description, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :description, :class => 'form-control' %>
+    </div>
+  </div>
+
+     <div class="form-group">
+      <%= f.fields_for :attachments do |task| %>
+          <%= render "attachment_fields", f: task %>
+      <% end %>
+      <div class="col-lg-offset-2 col-lg-10">
+        <%= link_to_add_association f, :attachments,:class => 'btn btn-primary' do %>
+            <i class="fa fa-plus-circle"></i>
+        <% end %>
+      </div>
+    </div>
+
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                project_sub_project_bench_marks_path(@project, @sub_project), :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+<% end %>

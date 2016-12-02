@@ -1,0 +1,63 @@
+<%= form_for ([@project, @sub_project, @coordinate]), :html => { :class => "form-horizontal coordinate" } do |f| %>
+
+  <% if @coordinate.errors.any? %>
+    <div id="error_expl" class="panel panel-danger">
+      <div class="panel-heading">
+        <h3 class="panel-title"><%= pluralize(@coordinate.errors.count, "error") %> prohibited this coordinate from being saved:</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+        <% @coordinate.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= f.label :village, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :title, :class => 'form-control' %>
+    </div>
+  </div>
+   <div class="form-group">
+    <%= f.label :east_utm, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :east_utm, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :north_utm, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :north_utm, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :lattitude, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :lattitude, :class => 'form-control' %>
+    </div>
+  </div>
+  <div class="form-group">
+    <%= f.label :longitude, :class => 'control-label col-lg-2' %>
+    <div class="col-lg-10">
+      <%= f.text_field :longitude, :class => 'form-control' %>
+    </div>
+  </div>
+    <div class="form-group">
+      <%= f.label :description, :class => 'control-label col-lg-2' %>
+      <div class="col-lg-10">
+        <%= f.text_field :description, :class => 'form-control' %>
+      </div>
+    </div>
+
+  <div class="form-group">
+    <div class="col-lg-offset-2 col-lg-10">
+      <%= f.submit nil, :class => 'btn btn-primary' %>
+      <%= link_to t('.cancel', :default => t("helpers.links.cancel")),
+                project_sub_project_coordinates_path(@project, @sub_project), :class => 'btn btn-default' %>
+    </div>
+  </div>
+
+<% end %>

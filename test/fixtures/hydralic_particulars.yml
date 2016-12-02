@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  from_km: MyString
+  to_km: MyString
+  title: MyString
+  description: MyText
+  project_id: 
+  type: 
+
+two:
+  from_km: MyString
+  to_km: MyString
+  title: MyString
+  description: MyText
+  project_id: 
+  type: 

@@ -1,0 +1,2 @@
+module VillageMapsHelper
+end

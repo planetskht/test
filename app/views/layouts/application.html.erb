@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : "Basemaps under TELUGU GANGA PROJECT  - To Manage Assets(Records)" %></title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag "application", :media => "all" %>
+
+    <!-- For third-generation iPad with high-resolution Retina display: -->
+    <!-- Size should be 144 x 144 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-144x144-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '144x144' %>
+
+    <!-- For iPhone with high-resolution Retina display: -->
+    <!-- Size should be 114 x 114 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-114x114-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '114x114' %>
+
+    <!-- For first- and second-generation iPad: -->
+    <!-- Size should be 72 x 72 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-72x72-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png', :sizes => '72x72' %>
+
+    <!-- For non-Retina iPhone, iPod Touch, and Android 2.1+ devices: -->
+    <!-- Size should be 57 x 57 pixels -->
+    <%= favicon_link_tag 'apple-touch-icon-precomposed.png', :rel => 'apple-touch-icon-precomposed', :type => 'image/png' %>
+
+    <!-- For all other devices -->
+    <!-- Size should be 32 x 32 pixels -->
+    <%= favicon_link_tag 'favicon.ico', :rel => 'shortcut icon' %>
+
+    <%= javascript_include_tag "application" %>
+
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.2/html5shiv.min.js" type="text/javascript"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+    <div class="navbar navbar-default navbar-static-top">
+      <div class="container">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#"><h3><b>Basemaps</b></h3>
+          <br/>
+          under TELUGU GANGA PROJECT
+        </a>
+        
+        <div class="navbar-collapse collapse navbar-responsive-collapse">
+          
+          <ul class="projects_menu nav navbar-nav right">
+            <% if current_user %>
+              <li class="dropdown main_dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><b>My Account</b> <i class="fa fa-caret-down"></i></a>
+                <ul class="dropdown-menu dropdown-mainmenu">
+                  <% if current_user && current_user.role == "Admin"%>
+                    <li><%= link_to "Manage Users", manage_users_path  %></li>
+                  <% end %>
+                  <li> <%= link_to "Change Password", edit_user_registration_path  %></li>
+                  <li><%= link_to "Logout", destroy_user_session_path  %></li>
+                </ul>
+              </li>
+            <% else %>
+              <li><%= link_to "Login", new_user_session_path  %></li>
+              <li><%= link_to "Register", new_user_registration_path  %></li>         
+            <% end %>
+          </ul>
+          <% if @sub_project and @sub_project.id.present? %>
+          <ul class="projects_menu nav navbar-nav right">
+            <li class="dropdown main_dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">BaseMap <i class="fa fa-caret-down"></i></a>
+              <ul class="dropdown-menu dropdown-mainmenu">
+                <li><a href="<%= project_sub_project_site_maps_path(@project, @sub_project) %>">Site Map Per KM Wise</a></li>
+                <li><%= link_to "Village Maps", project_sub_project_village_maps_path(@project, @sub_project) %>
+                <li><%= link_to "Base Cum Site Map Village Wise", project_sub_project_village_maps_path(@project, @sub_project, :map_type=> "Site Map") %>
+                <li><%= link_to "Global Coordinates With Satilite View", project_sub_project_coordinates_path(@project, @sub_project) %> 
+                <% @sub_project.custom_menus.all.group_by(&:menu_name).each_pair do |menu_name, menu|%>
+                  <li class="dropdown-submenu">
+                    <a href="#"><%= menu_name %></a>
+                    <ul class="dropdown-menu">
+                    <% menu.group_by(&:sub_menu_name).each_pair  do |sm_name, sm| %>
+                      <% if sm_name.present? %>
+                        <li class="dropdown-submenu">
+                          <a href="#"><%= sm_name %></a>
+                          <ul class="dropdown-menu">
+                          <% sm.each  do |m| %>
+                            <li><%= sub_menu_attachment_cell(m.attachments.first, m.attachment_type).html_safe %></li>
+                          <% end %>
+                          </ul>
+                        </li>
+                      <% else %>
+                        <% sm.each  do |m| %>
+                          <li><%= sub_menu_attachment_cell(m.attachments.first, m.attachment_type).html_safe %></li>
+                        <% end %>
+                      <% end %>
+                    <% end %>
+                    </ul>
+                  </li>
+                <% end %>
+                <% if current_user && current_user.role != "Guest"%> 
+                  <li class="divider">
+                  <li><%= link_to "+ Add Custom Menu", project_sub_project_custom_menus_path(@project, @sub_project) %>  
+                <% end %>
+                <!-- <li class="divider"></li>
+                    <li class="dropdown-submenu">
+                      <a href="#">Even More..</a>
+                      <ul class="dropdown-menu">
+                        <li><a href="#">3rd level</a></li>
+                        <li><a href="#">3rd level</a></li>
+                      </ul>
+                    </li> -->
+              </ul>
+            </li>
+            <li><%= link_to "Structure Drawings", project_sub_project_structure_drawings_path(@project, @sub_project) %></li>
+            <li><%= link_to "Hydralic Particulars", project_sub_project_hydralic_particulars_path(@project, @sub_project) %></li>
+            <li><%= link_to "Bench Marks", project_sub_project_bench_marks_path(@project, @sub_project) %></li>
+            </li>
+            
+          </ul>
+          <% end %>
+        </div>
+
+      </div>
+    </div>
+    <div class="container" style="padding-top: -100px;">
+      <embed src="<%= header_flash_file %>" width="1125" height="265"/>
+    </div>
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-3">
+        
+          <div class="well sidebar-nav panel-group accordion">
+            <div class="panel-group" id="accordion">
+              <div class="panel panel-default">
+                <% if current_user && current_user.role != "Guest"%>
+                  <div class="panel-heading">
+                    <div style="float: right;">
+                      <%= link_to new_project_path do  %>
+                          <i class="fa fa-plus"> Add project</i>
+                      <% end %>
+                    </div>
+                  </div>
+                <% end %>
+                <div class="panel-heading">
+                  <%= link_to "About TGP", tgp_path, target: "_blank" %>
+                </div>
+                <% if current_user%>
+                <% Project.all.each do |project|%>
+                <div class="panel-heading <%= main_collapse_class(project.id) %>">
+                  <h4 class="panel-title">
+                    <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= project.id %>" dataurl="" ><%= project.name %><i class="fa fa-caret-down"></i>
+                    </a>
+                    <span class="<%= main_control_class(project.id) %> project_control_span" style="float: right">
+                      <% if current_user && current_user.role != "Guest"%>
+                        <%= link_to edit_project_path(project) do  %>
+                          <i class="fa fa-pencil-square-o"></i>
+                        <% end %>
+                      <% end %>
+                      <% if current_user && current_user.role == "Admin"%>
+                        <%= link_to project_path(project), data: {confirm: "Are you sure you want to delete?"}, method: :delete do  %>
+                          <i class="fa fa-trash"></i>
+                        <% end %>
+                      <% end %>
+                    </span>
+
+                  </h4>
+                </div>
+                <div id="collapse<%= project.id %>" class="panel-collapse collapse <%= main_collapse_in(project.id) %>">
+                  <div class="panel-body">
+                    <ul class="nav nav-list">
+                      <li class="nav-header">
+                        .
+                        <% if current_user && current_user.role != "Guest"%>
+                          <div style="float: right">
+                            <%= link_to new_project_sub_project_path(project) do  %>
+                              <i class="fa fa-plus"> Add Sub Project</i>
+                            <% end %>
+                          </div>
+                        <% end %>  
+                      </li>
+                      <% project.sub_projects.each do |sub_project|%>
+                        <li class="<%= sub_project_active(sub_project.id) %>">
+                          <%= link_to sub_project.name, project_sub_project_path(project, sub_project)  %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  </div>
+                </div>
+                <% end %>
+                <% end %>
+                <div class="panel-heading">
+                  <%= link_to "Origin & History of  T.G.P", tgp_path(link: "origin"), target: "_blank"%>
+                </div>
+                <div class="panel-heading">
+                  <%= link_to "Agreement b/n Maharastra & Karnataka for giving 15 TMC of water to chennai", tgp_path(link: "agreement"), target: "_blank"%>
+                </div>
+                <div class="panel-heading">
+                  <%= link_to "Departmental Forms","http://www.alldforms.com/", target: "_blank"%>
+                </div>
+                <div class="panel-heading">
+                  <%= link_to "Historical Moments at Inauguration of T.G.P","http://basemaps.in/historic-moments.html", target: "_blank"%>
+                </div>
+                <div class="panel-heading">
+                  <%= link_to "Photos During Construction of T.G.P","http://basemaps.in/photos-construction.html", target: "_blank"%>
+                </div>
+              </div>
+            </div>
+
+          </div><!--/.well -->
+        
+        </div><!--/span-->
+        <div class="col-lg-9">
+          <%= bootstrap_flash %>
+          <div class="modal2" style="display:none">
+            <div class="center">
+              <img alt="" src="<%= asset_path('loader.gif') %>" />
+            </div>
+          </div>
+          <%= yield %>
+        </div>
+
+      </div><!--/row-->
+
+      <footer>
+        <a href="http://www.reliablecounter.com" target="_blank"><img src="http://www.reliablecounter.com/count.php?page=basemaps.in&digit=style/plain/6/&reloads=0" alt="www.reliablecounter.com" title="www.reliablecounter.com" border="0"></a><br /></a>
+        <p>&copy; YT Soft Solutions 2016</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+  </body>
+</html>
+<script>
+  $('#accordion .panel-heading a').click(function() {
+    $('.panel-heading').removeClass('active');
+    $('.project_control_span').addClass('hidden');
+    $(this).closest('.panel-heading').addClass('active');
+    $(this).closest('.panel-heading').find('.project_control_span').removeClass('hidden');
+    if($(this).attr("dataurl")){
+      window.location.href = $(this).attr("dataurl");
+    }
+  });
+  $('ul.nav li.main_dropdown').hover(function() {
+    $(this).find('.dropdown-mainmenu').stop(true, true).delay(200).fadeIn(500);
+  }, function() {
+    $(this).find('.dropdown-mainmenu').stop(true, true).delay(200).fadeOut(500);
+  });
+
+</script>
