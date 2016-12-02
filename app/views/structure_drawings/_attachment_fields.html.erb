@@ -1,0 +1,18 @@
+<div class="nested-fields">
+
+  <div class="form-group">
+    <%= f.label :attachment, :class => 'col-xs-3 col-sm-2 control-label' %>
+    <div class="col-xs-3">
+      <%= f.select :attach_type, options_for_select(StructureDrawing::ATTACH_TYPES, f.object.attach_type),{include_blank: "Select Attach Type"} ,{:class => 'form-control'} %>
+    </div>
+    <div class="col-xs-4">
+      <%= f.file_field :attachment, :class => 'form-control' %>
+      <%= f.object.attachment.file.original_filename if f.object.attachment.file %>
+    </div>
+    <div class="col-xs-1">
+      <%= link_to_remove_association f do %>
+          <i class="fa fa-trash-o fa-lg"></i>
+      <% end %>
+    </div>
+  </div>
+</div>

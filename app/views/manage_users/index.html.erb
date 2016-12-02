@@ -1,0 +1,35 @@
+<div class="form-group pull-right">
+    <input type="text" class="search form-control" placeholder="What you looking for?">
+</div>
+<span class="counter pull-right"></span>
+<table class="table table-hover table-bordered results">
+  <thead>
+    <tr>
+      <th class="col-md-1 col-xs-1"></th>
+      <th class="col-md-5 col-xs-4">Email</th>
+      <th>Role</th>
+      <th>Actions</th>
+    </tr>
+    <tr class="warning no-result">
+      <td colspan="4"><i class="fa fa-warning"></i> No result</td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each_with_index do |user, index| %>
+    <tr>
+      <th scope="row"><%= index+1 %></th>
+      <td><%= user.email%></td>
+      <%= form_for user, url: manage_user_path(user) do |f| %>
+        <td>
+            <%= f.select :role, ["Select Role","Admin", "Guest" ,"User"], {},{class: "form-control", style: "width: 180px"} %>
+        </td>
+        <td>
+         <%= button_tag(type: "submit", class: "btn btn-primary") do %>
+          <i class="fa fa-floppy-o"></i> Change Role
+         <% end %>
+        </td>
+      <% end %>
+    </tr>
+    <%end%>
+  </tbody>
+</table>

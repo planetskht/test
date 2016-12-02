@@ -1,0 +1,2 @@
+module StructureDrawingsHelper
+end

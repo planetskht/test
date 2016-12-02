@@ -1,0 +1,58 @@
+<div class="panel panel-default row">
+  <!-- Default panel contents -->
+  <div class="panel-heading">
+    <div style="display: inline">
+      <span class="h3">Structure Drawings of <%= @sub_project.name %>
+      </span>
+      <span class="right">
+        <% if current_user && current_user.role != "Guest"%>
+          <%= link_to new_project_sub_project_structure_drawing_path(@project, @sub_project)  do %>
+              <i class="fa fa-plus"> Add Structure Draw</i>
+          <% end %>
+        <% end %>
+      </span>
+    </div>
+
+  </div>
+  <div class="panel-body">
+    <table style="width:100%;table-layout:fixed;">
+    <% @structure_drawings.each_slice(3) do |c| %>
+      <tr>
+        <% c.each do |d| %>
+          <td style="width:33%;">
+            <div class="col-lg-3 col-md-4 basemap-thumb" style="border-style: solid; border-color: white">
+               <div>
+               <h4> <%= d.title %> 
+               <span style="float: right">
+                <% if current_user && current_user.role != "Guest"%>
+                  <%= link_to edit_project_sub_project_structure_drawing_path(@project, @sub_project, d) do  %>
+                    <i class="fa fa-pencil-square-o"></i>
+                  <% end %>
+                <% end %>  
+                <% if current_user && current_user.role == "Admin"%>
+                  <%= link_to project_sub_project_structure_drawing_path(@project, @sub_project, d), data: {confirm: "Are you sure you want to delete?"}, method: :delete do  %>
+                    <i class="fa fa-trash"></i>
+                  <% end %>
+                <% end %>  
+               </span>
+             </h4>
+             </div>
+               <% if d.attachments.count > 0 %>
+               <table style="width:100%;">
+                  <% d.attachments.each do |a| %>
+                    <tr>
+                      <td style="width:100%;">
+                         <%= attachment_cell(a).html_safe %>
+                      </td>
+                    </tr>
+                  <% end %>  
+               </table>
+             <% end %> 
+            </div>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+         <%model_class = Coordinate%>
+        <Cell><Data ss:Type="String">Village</Data></Cell>
+        <Cell><Data ss:Type="String"> < %= model_class.human_attribute_name(:east_utm) %> </Data></Cell>
+        <Cell><Data ss:Type="String"> <%= model_class.human_attribute_name(:north_utm) %> </Data></Cell>
+        <Cell><Data ss:Type="String"> <%= model_class.human_attribute_name(:lattitude) %> </Data></Cell>
+        <Cell><Data ss:Type="String"> <%= model_class.human_attribute_name(:longitude) %> </Data></Cell>
+        <Cell><Data ss:Type="String">Name of Structures</Data></Cell>
+        <Cell><Data ss:Type="String">Satellite View<</Data></Cell>
+      </Row>
+      <% @coordinates.each do |product| %>
+      <Row>
+        <Cell><Data ss:Type="String"> <%= product.title %> </Data></Cell>
+        <Cell><Data ss:Type="String"> <%= product.east_utm %> </Data></Cell>
+        <Cell><Data ss:Type="String"> <%= product.north_utm %> </Data></Cell>
+        <Cell><Data ss:Type="String"> <%= product.lattitude %> </Data></Cell>
+        <Cell><Data ss:Type="String"> <%= product.longitude %></Data></Cell>
+        <Cell><Data ss:Type="String"> <%= product.description %> </Data></Cell>
+        <Cell><Data ss:Type="String"> <%= link_to product.satelite_view_url %> </Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  title: MyString
+  description: MyText
+  east_utm: MyString
+  north_utm: MyText
+  lattitude: 1.5
+  longitude: 1.5
+  time_zone: MyString
+
+two:
+  title: MyString
+  description: MyText
+  east_utm: MyString
+  north_utm: MyText
+  lattitude: 1.5
+  longitude: 1.5
+  time_zone: MyString

@@ -1,0 +1,80 @@
+<div class="panel panel-default row">
+  <!-- Default panel contents -->
+  <div class="panel-heading">
+    <div style="display: inline">
+      <span class="h3">Village Coordinates of <%= @sub_project.name %>
+      </span>
+
+      <span class="right">
+        <% if current_user && current_user.role != "Guest"%>
+          <%= link_to new_project_sub_project_coordinate_path(@project, @sub_project)  do %>
+              <i class="fa fa-plus"> Add Village Coordinates</i>
+          <% end %>
+        <% end %>
+        &nbsp;
+        <%= link_to project_sub_project_coordinates_path(@project, @sub_project, format: "xls") do %>
+          <i class="fa fa-download"></i>Export
+        <% end%>
+      </span>
+
+
+    </div>
+  </div>
+  <%= form_tag import_project_sub_project_coordinates_path(@project, @sub_project), multipart: true, class: "form-inline" do %>
+    <% if current_user && current_user.role != "Guest"%>  
+      <div class="form-group">
+        <label for="email">File:</label>
+        <%= file_field_tag :file, class: "form-control" %>
+          </div>
+          <%= submit_tag "Import" %>
+        <% end %>
+        <div class="panel-body">
+        <div class="clear">
+      </div>
+    <% end %>
+    <table class="table table-bordered">
+      <thead>
+      <tr>
+        <%model_class = Coordinate%>
+        <th>Village</th>
+        <th><%= model_class.human_attribute_name(:east_utm) %></th>
+        <th><%= model_class.human_attribute_name(:north_utm) %></th>
+        <th><%= model_class.human_attribute_name(:lattitude) %></th>
+        <th><%= model_class.human_attribute_name(:longitude) %></th>
+        <th>Name of Structures</th>
+        <th>Satellite View</th>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @coordinates.each do |coordinate| %>
+        <tr>
+          <td><%= coordinate.title %></td>
+          <td><%= coordinate.east_utm %></td>
+          <td><%= coordinate.north_utm %></td>
+          <td><%= coordinate.lattitude %></td>
+          <td><%= coordinate.longitude %></td>
+          <td><%= coordinate.description %></td>
+          <td>
+            <%= link_to coordinate.satelite_view_url, :target => "_blank" do %>
+              <i class="fa fa-globe"></i>Satellite View
+            <% end %>
+          </td>
+          <td>
+            <% if current_user && current_user.role != "Guest"%>
+              <%= link_to edit_project_sub_project_coordinate_path(@project, @sub_project, coordinate) do  %>
+                  <i class="fa fa-pencil-square-o"></i>
+              <% end %>
+            <% end %>  
+            <% if current_user && current_user.role == "Admin"%> 
+              <%= link_to project_sub_project_coordinate_path(@project, @sub_project, coordinate), data: {confirm: "Are you sure you want to delete?"}, method: :delete do  %>
+                <i class="fa fa-trash"></i>
+              <% end %>
+            <% end %>  
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
