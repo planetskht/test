@@ -19,15 +19,17 @@
     <tr>
       <th scope="row"><%= index+1 %></th>
       <td><%= user.email%></td>
-      <%= form_for user, url: manage_user_path(user) do |f| %>
-        <td>
-            <%= f.select :role, ["Select Role","Admin", "Guest" ,"User"], {},{class: "form-control", style: "width: 180px"} %>
-        </td>
-        <td>
-         <%= button_tag(type: "submit", class: "btn btn-primary") do %>
-          <i class="fa fa-floppy-o"></i> Change Role
-         <% end %>
-        </td>
+      <% if user.email != "admin@basemaps.in" %>
+        <%= form_for user, url: manage_user_path(user) do |f| %>
+          <td>
+              <%= f.select :role, ["Select Role","Admin", "Guest" ,"Employee"], {},{class: "form-control", style: "width: 180px"} %>
+          </td>
+          <td>
+           <%= button_tag(type: "submit", class: "btn btn-primary") do %>
+            <i class="fa fa-floppy-o"></i> Change Role
+           <% end %>
+          </td>
+        <% end %>
       <% end %>
     </tr>
     <%end%>

@@ -8,7 +8,7 @@ guest = User.create_with(password: "test1234", password_confirmation: "test1234"
 @data_url = Rails.root + "../"+"basemaps_data/"
 
 def import_coordinates(sp, xls)
-  file = @data_url + "xls/#{xls}"
+  file = @data_url + "#{sp.folder_name}/#{xls}"
   if File.exist?(file)
     xls_file = File.new(file)
     puts xls
@@ -32,7 +32,7 @@ def self.open_spreadsheet(file)
 end
 
 def import_flash_images(sp, swf)
-  file = @data_url + "#{sp.name}/#{swf}"
+  file = @data_url + "#{sp.folder_name}/#{swf}"
   if File.exist?(file)
     swf_file = File.new(file)
     sp.attachments.create(attach_type: "Flash File", attachment: swf_file)
@@ -52,12 +52,14 @@ def import_bench_marks(sp, row, f1, f2, f3)
   bm.attachments.create(attach_type: "Excel Sheet", attachment: f3) if f3
 end
 
-def import_hydraulic(sp, row, f1, f2, f3)
+def import_hydraulic(sp, row, f1, f2, f3, f4)
   hp = sp.hydralic_particulars.find_or_create_by(title: row[0])
   hp.save!
 
   hp.attachments.create(attach_type: "Digitised Copy", attachment: f1) if f1
   hp.attachments.create(attach_type: "Pdf Copy", attachment: f2) if f2
+  hp.attachments.create(attach_type: "Hp Copy", attachment: f3) if f3
+  hp.attachments.create(attach_type: "Word File", attachment: f4) if f4
 end
 
 def import_kmwise(sp, row, f1, f2, f3)
@@ -137,7 +139,7 @@ def import_data(sub_proj, folder)
       when "bench marks"
         import_bench_marks(sub_proj, row, f1, f2, f3)
       when "hydraulic"
-        import_hydraulic(sub_proj, row, f1, f2, f3)
+        import_hydraulic(sub_proj, row, f1, f2, f3, f4)
       when "kmwise"
         import_kmwise(sub_proj, row, f1, f2, f3)
       when "structures"
@@ -157,7 +159,7 @@ end
 projects = ["TGP NANDYAL", "SKFF Canal Basemap from Km 0.000 to Km 45.125", "Kandaleru Reservoir Basemap", "SSG Canal Basemap from Km. 0.000 to Km. 151.837"]
 
 # Sub Projects
-sub_proj1 = ["TGP NANDYAL", "Pothireddypadu Canal", "Banakacherala Link Canal & Velugodu Balancing Reservoir", "TGP Main Canal from Km. 0.000 to Km. 96.130"]
+sub_proj1 = ["Pothireddypadu Canal-SRMC", "Banakacherala Link Canal & Velugodu Balancing Reservoir", "TGP Main Canal from Km. 0.000 to Km. 96.130"]
 sub_proj2 = ["SKFF Canal Basemap from Km 0.000 to Km 45.125"]
 sub_proj3 = ["Kandaleru Reservoir Basemap"]
 sub_proj4 = ["SSG Canal Basemap from Km. 0.000 to Km. 5.435_10.000", "Basemap from Km 10.000 to Km 30.000", "Basemap from Km 30.000 to Km 45.000",
@@ -166,7 +168,7 @@ sub_proj4 = ["SSG Canal Basemap from Km. 0.000 to Km. 5.435_10.000", "Basemap fr
 			"Basemap from Km 142.000 to Km 151.837", "7th Branch Canal Basemap from KM 0.000 TO KM 27.666", "7A AYACUT BASEMAP"]
 
 # Flash file for sub projects
-flash_sp1 = ["TGP MAIN CANAL.swf", "120.800-142.swf", "120.800-142.swf", "TGP MAIN CANAL.swf"]
+flash_sp1 = ["120.800-142.swf", "120.800-142.swf", "TGP MAIN CANAL.swf"]
 flash_sp2 = ["TGP MAIN CANAL.swf"]
 flash_sp3 = ["TGP MAIN CANAL.swf"]
 flash_sp4 = ["TGP MAIN CANAL.swf", "TGP MAIN CANAL.swf", "TGP MAIN CANAL.swf",
@@ -175,7 +177,7 @@ flash_sp4 = ["TGP MAIN CANAL.swf", "TGP MAIN CANAL.swf", "TGP MAIN CANAL.swf",
 			"TGP MAIN CANAL.swf", "TGP MAIN CANAL.swf", "TGP MAIN CANAL.swf"]
 
 # Coordinates for sub projects
-coord_sp1 = ["no_file.xls", "SRMC COORDINATES CANAL & STRUCTURES.xls", "LINK CANAL COORDINATES.xls", "KM 0.000 TO KM 95.825-98.305.xls"]
+coord_sp1 = ["SRBC COORDINATES CANAL & STRUCTURES.xls", "LINK CANAL COORDINATES.xls", "KM 0.000 TO KM 95.825-98.305.xls"]
 coord_sp2 = ["SKFF COORDINATES CANAL & STRUCTURES.xls"]
 coord_sp3 = ["KR DAM FRL COORDINATES.xls"]
 coord_sp4 = ["no_file.xls", "points RR 10.xls", "points RR 30.xls",
@@ -189,21 +191,24 @@ projects.each_with_index do |p, index|
   eval("sub_proj#{index+1}").each_with_index do |sp, ind|
     sub_proj = project.sub_projects.find_or_create_by(name: sp, description: sp)
     sub_proj.save!
-    
-    puts "."
-    xls = eval("coord_sp#{index+1}")[ind]
-    import_coordinates(sub_proj, xls) if xls.present?
+    if File.exist?(@data_url + "#{sub_proj.folder_name}")
+      puts "."
+      xls = eval("coord_sp#{index+1}")[ind]
+      import_coordinates(sub_proj, xls) if xls.present?
 
-    flash = eval("flash_sp#{index+1}")[ind]
-    import_flash_images(sub_proj, flash) if flash.present?
+      flash = eval("flash_sp#{index+1}")[ind]
+      import_flash_images(sub_proj, flash) if flash.present?
 
-    path = @data_url + "#{sp}"
-    if File.exist?("#{path}/import.csv")
-      import_data(sub_proj, path)
+      path = @data_url + "#{sub_proj.folder_name}"
+      if File.exist?("#{path}/import.csv")
+        import_data(sub_proj, path)
+      end
+      # Dir.pwd
+      # Dir.chdir(@data_url)
+      # Dir.mkdir(sp) unless File.exists?(sp)
+    else
+      puts "#{sp} folder not exist"
     end
-    # Dir.pwd
-    # Dir.chdir(@data_url)
-    # Dir.mkdir(sp) unless File.exists?(sp)
   end
 end
 

@@ -28,4 +28,7 @@ class SubProject < ActiveRecord::Base
     self.attachments.where(attach_type: "Images")
   end
 
+  def folder_name
+    self.name.gsub(" ", "-")
+  end
 end
