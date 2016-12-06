@@ -5,7 +5,7 @@ editor = User.create_with(password: "test1234", password_confirmation: "test1234
 guest = User.create_with(password: "test1234", password_confirmation: "test1234",role: "Guest").find_or_create_by(email: "guest@basemaps.in")
 
 
-@data_url = Rails.root +"basemaps_data/"
+@data_url = Rails.root + "../"+"basemaps_data/"
 
 def import_coordinates(sp, xls)
   file = @data_url + "#{sp.folder_name}/#{xls}"
