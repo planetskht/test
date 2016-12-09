@@ -22,7 +22,7 @@
           <td style="width:33%;">
             <div class="col-lg-3 col-md-4 col-xs-6 basemap-thumb" style="border-style: solid; border-color: white;">
                <div>
-               <h4> <%= d.title %> 
+               <h4> <font class="font_color"><%= d.title %> </font>
                <span style="float: right">
                       <% if current_user && current_user.role != "Guest"%>
                         <%= link_to edit_project_sub_project_bench_mark_path(@project, @sub_project, d) do  %>
@@ -39,11 +39,13 @@
              </div>
              <% if d.attachments.count > 0 %>
                <table style="width:300px;">
-                  <% d.attachments.each do |a| %>
+                  <% d.attachments.each_slice(2) do |attachs| %>
                     <tr>
-                      <td style="width:140px;">
-                         <%= attachment_cell(a).html_safe %>
-                      </td>
+                      <% attachs.each do |a| %>
+                        <td style="width:50%;">
+                           <%= attachment_cell(a).html_safe %>
+                        </td>
+                      <% end %>
                     </tr>
                   <% end %>  
                </table>

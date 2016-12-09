@@ -1,38 +1,47 @@
-  <%= @sub_project.name%>
-  <span style="float: right">
-    <% if current_user && current_user.role!="Guest"%>
-      <%= link_to edit_project_sub_project_path(@project,@sub_project) do  %>
-        <i class="fa fa-pencil-square-o"></i>
-      <% end %>
-    <% end %>
-    <% if current_user && current_user.role=="Admin"%>
-      <%= link_to project_sub_project_path(@project, @sub_project), data: {confirm: "Are you sure you want to delete?"}, method: :delete do  %>
-        <i class="fa fa-trash"></i>
-      <% end %>
-    <% end %>  
-  </span>
-<% if @sub_project.image_files.present? %>
-  <div id="owl-demo" class="owl-carousel owl-theme">
-    <% @sub_project.image_files.each do |file| %>
-        <div class="item"> 
-          <a href="#" class="pop"> <%= image_tag(file.attachment.url, height:"250", big_src:"#{file.attachment.url}")  %> </a>
-        </div>
-      <% end %> 
+<div class="panel panel-default row">
+  <!-- Default panel contents -->
+  <div class="panel-heading">
+    <div style="display: inline">
+      <h3><%= @sub_project.name%>
+      <span class="right">
+        <% if current_user && current_user.role!="Guest"%>
+          <%= link_to edit_project_sub_project_path(@project,@sub_project) do  %>
+            <i class="fa fa-pencil-square-o"></i>
+          <% end %>
+        <% end %>
+        <% if current_user && current_user.role=="Admin"%>
+          <%= link_to project_sub_project_path(@project, @sub_project), data: {confirm: "Are you sure you want to delete?"}, method: :delete do  %>
+            <i class="fa fa-trash"></i>
+          <% end %>
+        <% end %> 
+      </span>
+    </h3>
+    </div>
   </div>
-<% end %>
-<div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">              
-      <div class="modal-body">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-        <img src="" class="imagepreview" style="width: 100%;height: 500px;" >
+
+  <% if @sub_project.image_files.present? %>
+    <div id="owl-demo" class="owl-carousel owl-theme">
+      <% @sub_project.image_files.each do |file| %>
+          <div class="item"> 
+            <a href="#" class="pop"> <%= image_tag(file.attachment.url, height:"250", big_src:"#{file.attachment.url}")  %> </a>
+          </div>
+        <% end %> 
+    </div>
+  <% end %>
+  <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">              
+        <div class="modal-body">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <img src="" class="imagepreview" style="width: 100%;height: 500px;" >
+        </div>
       </div>
     </div>
   </div>
-</div>
-<br>
-<% if @sub_project.flash_file %>
-  <div class="container">
-    <embed src="<%= @sub_project.flash_file.attachment.url %>" width="800" height="1100"/>
-  </div> 
-<% end %>
+  <br>
+  <% if @sub_project.flash_file %>
+    <div class="container">
+      <embed src="<%= @sub_project.flash_file.attachment.url %>" width="800" height="1100"/>
+    </div> 
+  <% end %>
+</div> 

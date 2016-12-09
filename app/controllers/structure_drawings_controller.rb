@@ -57,7 +57,7 @@ class StructureDrawingsController < ApplicationController
   def destroy
     @structure_drawing.destroy
     respond_to do |format|
-      format.html { redirect_to structure_drawings_url, notice: 'Structure drawing was successfully destroyed.' }
+      format.html { redirect_to project_sub_project_structure_drawings_path(@project, @sub_project), notice: 'Structure drawing was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

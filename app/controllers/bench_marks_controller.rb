@@ -57,7 +57,7 @@ class BenchMarksController < ApplicationController
   def destroy
     @bench_mark.destroy
     respond_to do |format|
-      format.html { redirect_to bench_marks_url, notice: 'Bench mark was successfully destroyed.' }
+      format.html { redirect_to project_sub_project_bench_marks_path(@project, @sub_project), notice: 'Bench mark was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

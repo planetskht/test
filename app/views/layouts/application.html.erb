@@ -37,19 +37,11 @@
     <![endif]-->
   </head>
   <body>
-
-    <div class="navbar navbar-default navbar-static-top">
+    <div class="container">
+      <img src="<%= asset_path('top.png') %>" >
+    </div>
+    <div class="container navbar-default navbar-static-top">
       <div class="container">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#"><h3><b>Basemaps</b></h3>
-          <br/>
-          under TELUGU GANGA PROJECT
-        </a>
-        
         <div class="navbar-collapse collapse navbar-responsive-collapse">
           
           <ul class="projects_menu nav navbar-nav right">
@@ -126,8 +118,9 @@
 
       </div>
     </div>
+    
     <div class="container" style="padding-top: -100px;">
-      <embed src="<%= header_flash_file %>" width="1125" height="265"/>
+      <embed src="<%= header_flash_file %>" width="1150" height="270"/>
     </div>
     <div class="container">
       <div class="row">
@@ -183,7 +176,7 @@
                         <% end %>  
                       </li>
                       <% project.sub_projects.each do |sub_project|%>
-                        <li class="<%= sub_project_active(sub_project.id) %>">
+                        <li class="<%= sub_project_active(sub_project.id) %>" style="border-bottom: 1px dotted grey;">
                           <%= link_to sub_project.name, project_sub_project_path(project, sub_project)  %>
                         </li>
                       <% end %>

@@ -29,21 +29,23 @@ module ApplicationHelper
     href = attachment_path(attach) unless href
     case attach.attach_type
       when "Digitised Copy"
-        "<a href='#{href}'> <i class='fa fa-file'></i> #{attach.attach_type} </a>"
+        "<a class='download' href='#{href}'> <i class='fa fa-file'></i> #{attach.attach_type} </a>"
        when "Auto cad Map"
-        "<a href='#{href}'> <i class='fa fa-file'></i> #{attach.attach_type} </a>"  
+        "<a class='download' href='#{href}'> <i class='fa fa-file'></i> #{attach.attach_type} </a>"  
       when "Photo Copy"
-        "<a href='#{href}'> <i class='fa fa-file-powerpoint-o'></i> #{attach.attach_type} </a>"
+        "<a class='download' href='#{href}'> <i class='fa fa-file-powerpoint-o'></i> #{attach.attach_type} </a>"
       when "Scanned Copy"
-        "<a href='#{href}'> <i class='fa fa-file-image-o'></i> #{attach.attach_type} </a>"
+        "<a class='download' href='#{href}'> <i class='fa fa-file-image-o'></i> #{attach.attach_type} </a>"
       when "Hp Copy" 
-        "<a href='#{href}'> <i class='fa fa-file-excel-o'></i> #{attach.attach_type} </a>"
+        "<a class='download' href='#{href}'> <i class='fa fa-file-excel-o'></i> #{attach.attach_type} </a>"
       when "Pdf Copy" 
-        "<a href='#{href}'> <i class='fa fa-file-pdf-o'></i> #{attach.attach_type} </a>"  
+        "<a class='download' href='#{href}'> <i class='fa fa-file-pdf-o'></i> #{attach.attach_type} </a>"  
       when "Excel Sheet" 
-        "<a href='#{href}'> <i class='fa fa-file-pdf-o'></i> #{attach.attach_type} </a>"  
+        "<a class='download' href='#{href}'> <i class='fa fa-file-pdf-o'></i> #{attach.attach_type} </a>"
+      when "Word File" 
+        "<a class='download' href='#{href}'> <i class='fa fa-file-pdf-o'></i> #{attach.attach_type} </a>"  
       else
-        "<a href='#'> <i class='fa fa-file'></i> No File </a>" 
+        "<a class='download' href='#'> <i class='fa fa-file'></i> No File </a>" 
     end
   end
 

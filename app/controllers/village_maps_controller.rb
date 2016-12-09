@@ -61,7 +61,7 @@ class VillageMapsController < ApplicationController
   def destroy
     @village_map.destroy
     respond_to do |format|
-      format.html { redirect_to village_maps_url, notice: 'Village map was successfully destroyed.' }
+      format.html { redirect_to project_sub_project_village_maps_path(@project, @sub_project), notice: 'Village map was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

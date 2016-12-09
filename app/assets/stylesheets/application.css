@@ -21,6 +21,9 @@
 .right {
     float: right;
 }
+.top {
+    float: top;
+}
 #owl-demo .item img{
     display: block;
     width: auto;
@@ -49,7 +52,7 @@
     top: 0;
     left: 100%;
     margin-top: -6px;
-    margin-left: -1px;
+    margin-left: -6px;
     -webkit-border-radius: 0 6px 6px 6px;
     -moz-border-radius: 0 6px 6px;
     border-radius: 0 6px 6px 6px;
@@ -90,10 +93,10 @@
 }
 
 .basemap-thumb {
-    min-height: 100px;
-    background-color: lightgray;
+    min-height: 130px;
+    background-color: #eeeee0;
     width: 100%;
-   
+    margin-top:auto; 
 }
 .center
     {
@@ -129,4 +132,22 @@
 .navbar
 {
     padding-bottom: 60px;
+}
+
+.download:link, .download:visited {
+    color: #8b0000;
+}
+
+.download:hover, .download:active {
+    background-color: white;
+    color: #8b0000;
+}
+
+.font_color {
+    color: #551a8b;
+}
+
+.panel-heading{
+    border-style: solid; 
+    border-color: white !important;
 }

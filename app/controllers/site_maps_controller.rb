@@ -57,7 +57,7 @@ class SiteMapsController < ApplicationController
   def destroy
     @site_map.destroy
     respond_to do |format|
-      format.html { redirect_to site_maps_url, notice: 'Site map was successfully destroyed.' }
+      format.html { redirect_to project_sub_project_site_maps_path(@project, @sub_project), notice: 'Site map was successfully destroyed.' }
       format.json { head :no_content }
     end
   end
