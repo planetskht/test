@@ -82,6 +82,7 @@ end
 
 def import_village(sp, row, f1, f2, f3)
   vm = sp.village_maps.find_or_create_by(village_name: row[0], map_type: "Site Map")
+  vm.title = row[0]
   vm.save!
 
   vm.attachments.create(attach_type: "Digitised Copy", attachment: f1) if f1
@@ -90,6 +91,7 @@ end
 
 def import_village_maps(sp, row, f1, f2, f3)
   vm = sp.village_maps.find_or_create_by(village_name: row[0])
+  vm.title = row[0]
   vm.save!
 
   vm.attachments.create(attach_type: "Digitised Copy", attachment: f1) if f1

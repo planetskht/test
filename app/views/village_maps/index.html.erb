@@ -22,7 +22,7 @@
           <td style="width:33%;">
             <div class="col-lg-3 col-md-4 basemap-thumb" style="border-style: solid; border-color: white">
                <div>
-               <h4> <font class="font_color"><%= d.title %> </font>
+               <h4> <font class="font_color"><%= d.village_name %> </font>
                <span style="float: right">
                 <% if current_user && current_user.role != "Guest"%>  
                   <%= link_to edit_project_sub_project_village_map_path(@project, @sub_project, d) do  %>
