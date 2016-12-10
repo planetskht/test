@@ -1,1 +1,22 @@
-<object width="1000" height="1200" data="web.pdf"></object>
+<object id="pdf_object" width="1000" height="1200" data="web.pdf"></object>
+
+<script>
+var options = window.location.search.slice(1)
+                      .split('&')
+                      .reduce(function _reduce (/*Object*/ a, /*String*/ b) {
+                        b = b.split('=');
+                        a[b[0]] = decodeURIComponent(b[1]);
+                        return a;
+                      }, {});
+
+if(options["link"] == "origin")
+{
+	document.getElementById("pdf_object").setAttribute('data', "TGP.pdf");
+}else if(options["link"] == "agreement")
+{
+	document.getElementById("pdf_object").setAttribute('data', "agreement.pdf");
+}else{
+	document.getElementById("pdf_object").setAttribute('data', "web.pdf");
+}
+
+</script>
