@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+rm -rf public/uploads/attachment
 echo "db:drop.."
 rake db:drop
 echo "db:create.."

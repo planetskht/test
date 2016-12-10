@@ -121,6 +121,18 @@ def file_check(path, file_name)
   File.new("#{path}/#{row[1]}") if File.exist?("#{path}/#{row[1]}")
 end
 
+def import_project_data(proj, folder)
+  file = "#{folder}/project.csv"
+  if File.exist?(file)
+    csv = CSV.parse(File.read(file))
+    csv.each do |row|
+      if row[0].present? and row[1].present?
+        proj.attachments.create(attach_type: row[0], attachment: File.new("#{folder}/#{row[1]}")) if File.exist?("#{folder}/#{row[1]}")
+      end
+    end
+  end
+end
+
 def import_data(sub_proj, folder)
   file = "#{folder}/import.csv"
   csv = CSV.parse(File.read(file))
@@ -161,7 +173,7 @@ end
 projects = ["TGP NANDYAL", "SKFF Canal Basemap from Km 0.000 to Km 45.125", "Kandaleru Reservoir Basemap", "SSG Canal Basemap from Km. 0.000 to Km. 151.837"]
 
 # Sub Projects
-sub_proj1 = ["TGP Main Canal from Km. 0.000 to Km. 96.130", "Pothireddypadu Canal-SRMC", "TGP Link Canal-VBR"]
+sub_proj1 = ["TGP Main Canal", "Srisailam Right Side Main Canal", "TGP Link Canal-VBR"]
 sub_proj2 = ["SKFF Canal Basemap from Km 0.000 to Km 45.125"]
 sub_proj3 = ["Kandaleru Reservoir Basemap"]
 sub_proj4 = ["SSG Canal Basemap from Km. 0.000 to Km. 5.435_10.000", "Basemap from Km 10.000 to Km 30.000", "Basemap from Km 30.000 to Km 45.000",
@@ -190,6 +202,12 @@ coord_sp4 = ["no_file.xls", "points RR 10.xls", "points RR 30.xls",
 projects.each_with_index do |p, index|
   project = Project.find_or_create_by(name: p, description: p)
   project.save!
+  if File.exist?(@data_url + "#{project.folder_name}")
+    path = @data_url + "#{project.folder_name}"
+    import_project_data(project, path)
+  else
+    puts "#{p} folder not exist"
+  end
   eval("sub_proj#{index+1}").each_with_index do |sp, ind|
     sub_proj = project.sub_projects.find_or_create_by(name: sp, description: sp)
     sub_proj.save!
