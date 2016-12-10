@@ -5,7 +5,8 @@ class StructureDrawingsController < ApplicationController
   # GET /structure_drawings
   # GET /structure_drawings.json
   def index
-    @structure_drawings = @sub_project.structure_drawings
+    @structure_drawings = @sub_project.structure_drawings.list
+    @structure_drawings_canal = @sub_project.structure_drawings.canal_list
   end
 
   # GET /structure_drawings/1
@@ -70,7 +71,7 @@ class StructureDrawingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def structure_drawing_params
-      params.require(:structure_drawing).permit(:title, :description, attachments_attributes: [:attach_type, :attachment, :id, :_destroy])
+      params.require(:structure_drawing).permit(:title, :description, :type, attachments_attributes: [:attach_type, :attachment, :id, :_destroy])
     end
 
     def set_parents

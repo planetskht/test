@@ -121,6 +121,7 @@ ActiveRecord::Schema.define(version: 20161116022231) do
     t.text     "description"
     t.integer  "sub_project_id"
     t.string   "type"
+    t.string   "structure_type"
     t.datetime "created_at",     null: false
     t.datetime "updated_at",     null: false
   end

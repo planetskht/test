@@ -71,13 +71,17 @@ def import_kmwise(sp, row, f1, f2, f3)
 end
 
 def import_structures(sp, row, f1, f2, f3, f4)
-  sd = sp.structure_drawings.find_or_create_by(title: row[0])
+  sd = sp.structure_drawings.find_or_create_by(title: row[0], structure_type: nil)
   sd.save!
 
   sd.attachments.create(attach_type: "Digitised Copy", attachment: f1) if f1
   sd.attachments.create(attach_type: "Photo Copy", attachment: f2) if f2
   sd.attachments.create(attach_type: "Scanned Copy", attachment: f3) if f3
-  sd.attachments.create(attach_type: "Hp Copy", attachment: f4) if f4
+  if f4
+    sd = sp.structure_drawings.find_or_create_by(title: row[0], structure_type: "Canal")
+    sd.save!
+    sd.attachments.create(attach_type: "Hp Copy", attachment: f4) if f4
+  end
 end
 
 def import_village(sp, row, f1, f2, f3)
