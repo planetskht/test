@@ -71,7 +71,7 @@ class StructureDrawingsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def structure_drawing_params
-      params.require(:structure_drawing).permit(:title, :description, :type, attachments_attributes: [:attach_type, :attachment, :id, :_destroy])
+      params.require(:structure_drawing).permit(:title, :description, :structure_type, attachments_attributes: [:attach_type, :attachment, :id, :_destroy])
     end
 
     def set_parents
