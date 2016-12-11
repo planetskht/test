@@ -6,7 +6,7 @@
       </span>
       <span class="right">
         <% if current_user && current_user.role != "Guest"%>
-          <%= link_to new_project_sub_project_village_map_path(@project, @sub_project)  do %>
+          <%= link_to new_project_sub_project_village_map_path(@project, @sub_project, :map_type => params[:map_type])  do %>
               <i class="fa fa-plus"> Add Village Map</i>
           <% end %>
         <% end %>

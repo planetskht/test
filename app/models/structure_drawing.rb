@@ -5,12 +5,5 @@ class StructureDrawing < ActiveRecord::Base
   ATTACH_TYPES = ["Digitised Copy", "Photo Copy", "Scanned Copy", "Hp Copy"]
   validates_presence_of :title
 
-  def self.canal_list
-  	where(:structure_type => 'Canal')
-  end
-
-  def self.list
-  	where(:structure_type => nil)
-  end
 
 end

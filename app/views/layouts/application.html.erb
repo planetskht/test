@@ -68,7 +68,7 @@
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">BaseMap <i class="fa fa-caret-down"></i></a>
                 <ul class="dropdown-menu dropdown-mainmenu">
                   <li><a href="<%= project_sub_project_site_maps_path(@project, @sub_project) %>">Site Map Per KM Wise</a></li>
-                  <li><%= link_to "Village Maps", project_sub_project_village_maps_path(@project, @sub_project) %>
+                  <li><%= link_to "Village Maps", project_sub_project_village_maps_path(@project, @sub_project, :map_type=> "Village Map") %>
                   <li><%= link_to "Base Cum Site Map Village Wise", project_sub_project_village_maps_path(@project, @sub_project, :map_type=> "Site Map") %>
                   <li><%= link_to "Global Coordinates With Satilite View", project_sub_project_coordinates_path(@project, @sub_project) %> 
                   <% @sub_project.custom_menus.all.group_by(&:menu_name).each_pair do |menu_name, menu|%>
@@ -109,7 +109,15 @@
                 </ul>
               </li>
               <li class="dropdown main_dropdown"><%= link_to "Structure Drawings", project_sub_project_structure_drawings_path(@project, @sub_project) %></li>
-              <li class="dropdown main_dropdown"><%= link_to "Hydralic Particulars", project_sub_project_hydralic_particulars_path(@project, @sub_project) %></li>
+
+              <li class="dropdown main_dropdown">
+                <a href="#" class="dropdown-toggle" data-toggle="dropdown">Hydralic Particulars<i class="fa fa-caret-down"></i></a>
+                <ul class="dropdown-menu dropdown-mainmenu">
+                  <li> <%= link_to "Canals", project_sub_project_hydralic_particulars_path(@project, @sub_project, :hydralic_type=> "Canal")  %></li>
+                  <li><%= link_to "Structures", project_sub_project_hydralic_particulars_path(@project, @sub_project, :hydralic_type=> "Structure")  %></li>
+                </ul>
+              </li>
+
               <li class="dropdown main_dropdown"><%= link_to "Bench Marks", project_sub_project_bench_marks_path(@project, @sub_project) %></li>
               </li>
               
@@ -121,9 +129,7 @@
       </div>
       
       <div class="container rounded_corners" style="padding-top:5px">
-        <% if @project and @project.header_flash_file %>
-          <embed src="<%= header_flash_file %>" width="1140" height="268"/>
-        <% elsif @project and @project.image_files.present? %>
+        <% if @project and @project.image_files.present? %>
           <div id="owl-demo" class="owl-carousel owl-theme">
             <% @project.image_files.each do |file| %>
               <div class="item"> 
@@ -143,15 +149,16 @@
               <div class="panel-group" id="accordion">
                 <div class="panel panel-default">
                   <% if current_user && current_user.role != "Guest"%>
-                    <div class="panel-heading">
+                    <div class="panel-heading sidebar_menu">
                       <div style="float: right;">
+                        &nbsp;
                         <%= link_to new_project_path do  %>
                             <i class="fa fa-plus"> Add project</i>
                         <% end %>
                       </div>
                     </div>
                   <% end %>
-                  <div class="panel-heading">
+                  <div class="panel-heading sidebar_menu">
                     <%= link_to "About TGP", tgp_path, target: "_blank" %>
                   </div>
                   <% if current_user%>
@@ -179,7 +186,7 @@
                     <div class="panel-body">
                       <ul class="nav nav-list">
                         <li class="nav-header">
-                          .
+                          &nbsp;
                           <% if current_user && current_user.role != "Guest"%>
                             <div style="float: right">
                               <%= link_to new_project_sub_project_path(project) do  %>
@@ -198,19 +205,19 @@
                   </div>
                   <% end %>
                   <% end %>
-                  <div class="panel-heading">
+                  <div class="panel-heading sidebar_menu">
                     <%= link_to "Origin & History of  T.G.P", tgp_path(link: "origin"), target: "_blank"%>
                   </div>
-                  <div class="panel-heading">
+                  <div class="panel-heading sidebar_menu">
                     <%= link_to "Agreement b/n Maharastra & Karnataka for giving 15 TMC of water to chennai", tgp_path(link: "agreement"), target: "_blank"%>
                   </div>
-                  <div class="panel-heading">
+                  <div class="panel-heading sidebar_menu">
                     <%= link_to "Departmental Forms","http://www.alldforms.com/", target: "_blank"%>
                   </div>
-                  <div class="panel-heading">
+                  <div class="panel-heading sidebar_menu">
                     <%= link_to "Historical Moments at Inauguration of T.G.P","http://basemaps.in/historic-moments.html", target: "_blank"%>
                   </div>
-                  <div class="panel-heading">
+                  <div class="panel-heading sidebar_menu">
                     <%= link_to "Photos During Construction of T.G.P","http://basemaps.in/photos-construction.html", target: "_blank"%>
                   </div>
                 </div>

@@ -1,4 +1,5 @@
 class CoordinatesController < ApplicationController
+  before_filter :require_user
   before_action :set_parents
   before_action :set_coordinate, only: [:show, :edit, :update, :destroy]
 

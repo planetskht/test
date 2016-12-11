@@ -8,12 +8,12 @@
     <Table>
       <Row>
          <%model_class = Coordinate%>
-        <Cell><Data ss:Type="String">Village</Data></Cell>
-        <Cell><Data ss:Type="String"> < %= model_class.human_attribute_name(:east_utm) %> </Data></Cell>
+        <Cell><Data ss:Type="String">Chainage</Data></Cell>
+        <Cell><Data ss:Type="String"> <%= model_class.human_attribute_name(:east_utm) %> </Data></Cell>
         <Cell><Data ss:Type="String"> <%= model_class.human_attribute_name(:north_utm) %> </Data></Cell>
         <Cell><Data ss:Type="String"> <%= model_class.human_attribute_name(:lattitude) %> </Data></Cell>
         <Cell><Data ss:Type="String"> <%= model_class.human_attribute_name(:longitude) %> </Data></Cell>
-        <Cell><Data ss:Type="String">Name of Structures</Data></Cell>
+        <Cell><Data ss:Type="String">Structure</Data></Cell>
         <Cell><Data ss:Type="String">Satellite View<</Data></Cell>
       </Row>
       <% @coordinates.each do |product| %>
@@ -24,7 +24,7 @@
         <Cell><Data ss:Type="String"> <%= product.lattitude %> </Data></Cell>
         <Cell><Data ss:Type="String"> <%= product.longitude %></Data></Cell>
         <Cell><Data ss:Type="String"> <%= product.description %> </Data></Cell>
-        <Cell><Data ss:Type="String"> <%= link_to product.satelite_view_url %> </Data></Cell>
+        <Cell><Data ss:Type="String"> <%= link_to "Satellite View", product.satelite_view_url %> </Data></Cell>
       </Row>
     <% end %>
     </Table>

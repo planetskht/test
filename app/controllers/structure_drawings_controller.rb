@@ -1,12 +1,12 @@
 class StructureDrawingsController < ApplicationController
+  before_filter :require_user
   before_action :set_parents
   before_action :set_structure_drawing, only: [:show, :edit, :update, :destroy]
 
   # GET /structure_drawings
   # GET /structure_drawings.json
   def index
-    @structure_drawings = @sub_project.structure_drawings.list
-    @structure_drawings_canal = @sub_project.structure_drawings.canal_list
+    @structure_drawings = @sub_project.structure_drawings
   end
 
   # GET /structure_drawings/1

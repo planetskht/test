@@ -1,4 +1,6 @@
 class ManageUsersController < ApplicationController
+	before_filter :require_user
+	
 	def index
 	  if current_user && current_user.role == "Admin"
 	  	@users = User.all

@@ -1,11 +1,12 @@
 class VillageMapsController < ApplicationController
+  before_filter :require_user
   before_action :set_parents
   before_action :set_village_map, only: [:show, :edit, :update, :destroy]
   
   # GET /village_maps
   # GET /village_maps.json
   def index
-    if params[:map_type].present?
+    if params[:map_type].present? && params[:map_type] == "Site Map"
       @village_maps = @sub_project.village_maps.site_maps
     else
       @village_maps = @sub_project.village_maps.normal_maps
@@ -19,7 +20,7 @@ class VillageMapsController < ApplicationController
 
   # GET /village_maps/new
   def new
-    @village_map = VillageMap.new
+    @village_map = VillageMap.new(:map_type => params[:map_type])
   end
 
   # GET /village_maps/1/edit
@@ -33,7 +34,7 @@ class VillageMapsController < ApplicationController
 
     respond_to do |format|
       if @village_map.save
-        format.html { redirect_to  project_sub_project_village_maps_path(@project, @sub_project), notice: 'Village map was successfully created.' }
+        format.html { redirect_to  project_sub_project_village_maps_path(@project, @sub_project, :map_type => @village_map.map_type), notice: 'Village map was successfully created.' }
         format.json { render :show, status: :created, location: @village_map }
       else
         format.html { render :new }
@@ -47,7 +48,7 @@ class VillageMapsController < ApplicationController
   def update
     respond_to do |format|
       if @village_map.update(village_map_params)
-        format.html { redirect_to project_sub_project_village_maps_path(@project, @sub_project), notice: 'Village map was successfully updated.' }
+        format.html { redirect_to project_sub_project_village_maps_path(@project, @sub_project, :map_type => @village_map.map_type), notice: 'Village map was successfully updated.' }
         format.json { render :show, status: :ok, location: @village_map }
       else
         format.html { render :edit }
@@ -59,9 +60,10 @@ class VillageMapsController < ApplicationController
   # DELETE /village_maps/1
   # DELETE /village_maps/1.json
   def destroy
+    map_type = @village_map.map_type
     @village_map.destroy
     respond_to do |format|
-      format.html { redirect_to project_sub_project_village_maps_path(@project, @sub_project), notice: 'Village map was successfully destroyed.' }
+      format.html { redirect_to project_sub_project_village_maps_path(@project, @sub_project, :map_type => map_type), notice: 'Village map was successfully destroyed.' }
       format.json { head :no_content }
     end
   end

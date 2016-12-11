@@ -70,8 +70,9 @@ ActiveRecord::Schema.define(version: 20161116022231) do
     t.text     "description"
     t.integer  "sub_project_id"
     t.string   "type"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.string   "hydralic_type",  default: "Canal"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
   end
 
   add_index "hydralic_particulars", ["sub_project_id"], name: "index_hydralic_particulars_on_sub_project_id", using: :btree
@@ -169,10 +170,10 @@ ActiveRecord::Schema.define(version: 20161116022231) do
   create_table "village_maps", force: :cascade do |t|
     t.string   "title"
     t.text     "village_name"
-    t.string   "map_type",       default: "Normal"
+    t.string   "map_type",       default: "Village Map"
     t.integer  "sub_project_id"
-    t.datetime "created_at",                        null: false
-    t.datetime "updated_at",                        null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
   end
 
   add_index "village_maps", ["sub_project_id"], name: "index_village_maps_on_sub_project_id", using: :btree

@@ -2,11 +2,11 @@
   <!-- Default panel contents -->
   <div class="panel-heading">
     <div style="display: inline">
-      <span class="h3">Hydralic Particulars of <%= @sub_project.name %>
+      <span class="h3">Hydralic Particulars(<%= params[:hydralic_type] %>) of <%= @sub_project.name %>
       </span>
       <span class="right">
         <% if current_user && current_user.role != "Guest"%>
-          <%= link_to new_project_sub_project_hydralic_particular_path(@project, @sub_project, :map_type => params[:map_type])  do %>
+          <%= link_to new_project_sub_project_hydralic_particular_path(@project, @sub_project, :hydralic_type => params[:hydralic_type])  do %>
               <i class="fa fa-plus"> Add Hydralic Particular</i>
           <% end %>
         <% end %>

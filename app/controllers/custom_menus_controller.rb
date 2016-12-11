@@ -1,4 +1,5 @@
 class CustomMenusController < ApplicationController
+  before_filter :require_user
   before_action :set_parents
   before_action :set_custom_menu, only: [:show, :edit, :update, :destroy]
 

@@ -1,4 +1,5 @@
 class SubProjectsController < ApplicationController
+  before_filter :require_user
   before_action :set_project
   before_action :set_sub_project, only: [:show, :edit, :update, :destroy]
 

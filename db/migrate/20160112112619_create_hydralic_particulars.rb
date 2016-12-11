@@ -7,7 +7,7 @@ class CreateHydralicParticulars < ActiveRecord::Migration
       t.text :description
       t.references :sub_project, index: true, foreign_key: true
       t.string :type
-
+      t.string :hydralic_type, default: "Canal"
       t.timestamps null: false
     end
   end

@@ -53,7 +53,7 @@ def import_bench_marks(sp, row, f1, f2, f3)
 end
 
 def import_hydraulic(sp, row, f1, f2, f3, f4)
-  hp = sp.hydralic_particulars.find_or_create_by(title: row[0])
+  hp = sp.hydralic_particulars.find_or_create_by(title: row[0], hydralic_type: "Canal")
   hp.save!
 
   hp.attachments.create(attach_type: "Digitised Copy", attachment: f1) if f1
@@ -78,9 +78,9 @@ def import_structures(sp, row, f1, f2, f3, f4)
   sd.attachments.create(attach_type: "Photo Copy", attachment: f2) if f2
   sd.attachments.create(attach_type: "Scanned Copy", attachment: f3) if f3
   if f4
-    sd = sp.structure_drawings.find_or_create_by(title: row[0], structure_type: "Canal")
-    sd.save!
-    sd.attachments.create(attach_type: "Hp Copy", attachment: f4) if f4
+    hp = sp.hydralic_particulars.find_or_create_by(title: row[0], hydralic_type: "Structure")
+    hp.save!
+    hp.attachments.create(attach_type: "Hp Copy", attachment: f4) if f4
   end
 end
 
@@ -94,7 +94,7 @@ def import_village(sp, row, f1, f2, f3)
 end
 
 def import_village_maps(sp, row, f1, f2, f3)
-  vm = sp.village_maps.find_or_create_by(village_name: row[0])
+  vm = sp.village_maps.find_or_create_by(village_name: row[0], map_type: "Village Map")
   vm.title = row[0]
   vm.save!
 
@@ -177,7 +177,7 @@ end
 projects = ["TGP NANDYAL", "SKFF Canal Basemap from Km 0.000 to Km 45.125", "Kandaleru Reservoir Basemap", "SSG Canal Basemap from Km. 0.000 to Km. 151.837"]
 
 # Sub Projects
-sub_proj1 = ["TGP Main Canal", "Srisailam Right Side Main Canal", "TGP Link Canal-VBR"]
+sub_proj1 = ["Srisailam Right Side Main Canal", "TGP Link Canal-VBR", "TGP Main Canal"]
 sub_proj2 = ["SKFF Canal Basemap from Km 0.000 to Km 45.125"]
 sub_proj3 = ["Kandaleru Reservoir Basemap"]
 sub_proj4 = ["SSG Canal Basemap from Km. 0.000 to Km. 5.435_10.000", "Basemap from Km 10.000 to Km 30.000", "Basemap from Km 30.000 to Km 45.000",
@@ -186,7 +186,7 @@ sub_proj4 = ["SSG Canal Basemap from Km. 0.000 to Km. 5.435_10.000", "Basemap fr
 			"Basemap from Km 142.000 to Km 151.837", "7th Branch Canal Basemap from KM 0.000 TO KM 27.666", "7A AYACUT BASEMAP"]
 
 # Flash file for sub projects
-flash_sp1 = ["TGP MAIN CANAL.swf", "120.800-142.swf", "120.800-142.swf"]
+flash_sp1 = ["120.800-142.swf", "120.800-142.swf", "TGP MAIN CANAL.swf"]
 flash_sp2 = ["TGP MAIN CANAL.swf"]
 flash_sp3 = ["TGP MAIN CANAL.swf"]
 flash_sp4 = ["TGP MAIN CANAL.swf", "TGP MAIN CANAL.swf", "TGP MAIN CANAL.swf",
@@ -195,7 +195,7 @@ flash_sp4 = ["TGP MAIN CANAL.swf", "TGP MAIN CANAL.swf", "TGP MAIN CANAL.swf",
 			"TGP MAIN CANAL.swf", "TGP MAIN CANAL.swf", "TGP MAIN CANAL.swf"]
 
 # Coordinates for sub projects
-coord_sp1 = ["KM 0.000 TO KM 95.825-98.305.xls", "SRBC COORDINATES CANAL & STRUCTURES.xls", "LINK CANAL COORDINATES.xls"]
+coord_sp1 = ["SRBC COORDINATES CANAL & STRUCTURES.xls", "LINK CANAL COORDINATES.xls", "KM 0.000 TO KM 95.825-98.305.xls"]
 coord_sp2 = ["SKFF COORDINATES CANAL & STRUCTURES.xls"]
 coord_sp3 = ["KR DAM FRL COORDINATES.xls"]
 coord_sp4 = ["no_file.xls", "points RR 10.xls", "points RR 30.xls",

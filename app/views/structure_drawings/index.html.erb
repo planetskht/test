@@ -58,49 +58,4 @@
     </table>
   </div>
 
-  <h3><font style="color:red; padding-left:15px;"><u>Canal Structures</u>:-</font></h3>
-  <div class="panel-body">
-    <table style="width:100%;table-layout:fixed;">
-    <% @structure_drawings_canal.each_slice(3) do |c| %>
-      <tr>
-        <% c.each do |d| %>
-          <td style="width:33%;">
-            <div class="col-lg-3 col-md-4 basemap-thumb" style="border-style: solid; border-color: white">
-               <div>
-               <h4> <font class="font_color"><%= d.title %> </font>
-               <span style="float: right">
-                <% if current_user && current_user.role != "Guest"%>
-                  <%= link_to edit_project_sub_project_structure_drawing_path(@project, @sub_project, d) do  %>
-                    <i class="fa fa-pencil-square-o"></i>
-                  <% end %>
-                <% end %>  
-                <% if current_user && current_user.role == "Admin"%>
-                  <%= link_to project_sub_project_structure_drawing_path(@project, @sub_project, d), data: {confirm: "Are you sure you want to delete?"}, method: :delete do  %>
-                    <i class="fa fa-trash"></i>
-                  <% end %>
-                <% end %>  
-               </span>
-             </h4>
-             </div>
-               <% if d.attachments.count > 0 %>
-               <table style="width:100%;">
-                  <% d.attachments.each_slice(2) do |attachs| %>
-                    <tr>
-                      <% attachs.each do |a| %>
-                        <td style="width:50%;">
-                           <%= attachment_cell(a).html_safe %>
-                        </td>
-                      <% end %>
-                    </tr>
-                  <% end %>  
-               </table>
-             <% end %> 
-            </div>
-          </td>
-        <% end %>
-      </tr>
-    <% end %>
-    </table>
-  </div>
-
 </div>
